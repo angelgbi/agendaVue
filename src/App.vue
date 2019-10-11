@@ -1,25 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <div>
-      <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand to="/">Agenda</b-navbar-brand>
-
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-        <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav>
-            <b-nav-item to="/">Contacts</b-nav-item>
-            <b-nav-item href="#" disabled>Disabled</b-nav-item>
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar>
-    </div>
+    <NavBar />
     <router-view />
+    <Footer />
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import NavBar from '@/components/NavBar.vue'
+import Footer from '@/components/Footer.vue'
+
+export default {
+  name: 'App',
+  components: {
+    NavBar,
+    Footer
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
