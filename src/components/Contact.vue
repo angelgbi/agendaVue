@@ -29,10 +29,15 @@
           </b-card-text>
         </b-card-body>
         <div class="contact-item__btn-container">
-          <b-button pill href="#" variant="info" class="contact-item__btn">
+          <b-button pill variant="info" class="contact-item__btn">
             Edit
           </b-button>
-          <b-button pill href="#" variant="danger" class="contact-item__btn">
+          <b-button
+            pill
+            variant="danger"
+            class="contact-item__btn"
+            @click="deleteContact"
+          >
             Delete
           </b-button>
         </div>
@@ -47,6 +52,16 @@ export default {
     contactData: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    deleteContact() {
+      this.$axios
+        .delete(this.contactData._id)
+        .then(() => {
+          this.$emit('contactDeleted')
+        })
+        .catch((e) => console.log(e))
     }
   }
 }

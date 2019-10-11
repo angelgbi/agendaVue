@@ -1,0 +1,10 @@
+.agenda-form {
+  width: 60%;
+  display: block;
+  margin: 30px auto;
+
+  &__btn-container {
+    justify-content: space-evenly;
+    display: flex;
+}
+}
