@@ -1,6 +1,6 @@
 <template>
   <div class="contact-list">
-    Contact List
+    <h1>Contact List</h1>
     <Contact
       :contactData="contact"
       v-for="(contact, i) in contacts"

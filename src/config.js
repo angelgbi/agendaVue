@@ -43,3 +43,28 @@ axiosInstance.defaults.headers.common.Accept = 'application/json'
 axiosInstance.defaults.timeout = 1500
 
 Vue.prototype.$axios = axiosInstance
+
+/* ============
+ * Vee-validate
+ * ============
+ *
+ * VeeValidate is a template-based validation library for Vue.js.
+ * https://logaretm.github.io/vee-validate/
+ */
+import { extend } from 'vee-validate'
+import { required, email, alpha_spaces, min } from 'vee-validate/dist/rules'
+
+// Add the required rule
+extend('required', {
+  ...required,
+  message: 'This field is required'
+})
+extend('email', email)
+extend('alpha_spaces', {
+  ...alpha_spaces,
+  message: 'Only alphabetic characters and spaces are allowed'
+})
+extend('min', {
+  ...min,
+  message: 'The {_field_} field must be at least {length} characters'
+})
