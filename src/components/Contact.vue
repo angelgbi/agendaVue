@@ -29,7 +29,12 @@
           </b-card-text>
         </b-card-body>
         <div class="contact-item__btn-container">
-          <b-button pill variant="info" class="contact-item__btn">
+          <b-button
+            pill
+            :to="{ name: 'contact update', params: { id: contactData._id } }"
+            variant="info"
+            class="contact-item__btn"
+          >
             Edit
           </b-button>
           <b-button

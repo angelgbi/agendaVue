@@ -1,6 +1,6 @@
 <template>
   <div class="agenda-form">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show" validated>
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="input-group-1"
         label="Contact Name:"
@@ -54,7 +54,6 @@
           id="input-4"
           v-model="form.nickname"
           placeholder="Enter a Nickname"
-          state="null"
         ></b-form-input>
       </b-form-group>
 
@@ -68,12 +67,11 @@
           id="input-5"
           v-model="form.notes"
           placeholder="Enter notes"
-          state="null"
         ></b-form-input>
       </b-form-group>
 
       <div class="agenda-form__btn-container">
-        <b-button type="submit" variant="info">Submit</b-button>
+        <b-button type="submit" variant="info">Save</b-button>
         <b-button type="reset" variant="danger">Cancel</b-button>
       </div>
     </b-form>
@@ -85,6 +83,12 @@
         <strong class="mr-auto">Contact Added!</strong>
       </template>
       Your contact was added successfully!
+    </b-toast>
+    <b-toast id="form-update" variant="info" solid>
+      <template v-slot:toast-title>
+        <strong class="mr-auto">Contact Updated!</strong>
+      </template>
+      Your contact was updated successfully!
     </b-toast>
     <b-toast id="form-error" variant="danger" solid>
       <template v-slot:toast-title>
@@ -106,22 +110,38 @@ export default {
         nickname: '',
         notes: ''
       },
-      show: true
+      show: true,
+      formForAdd: true,
+      contactId: ''
     }
   },
   methods: {
     onSubmit(e) {
       e.preventDefault()
-      //alert(JSON.stringify(this.form))
-      this.$axios
-        .post('/', this.form)
-        .then(() => {
-          this.$bvToast.show('form-add')
-        })
-        .catch((e) => {
-          console.log(e)
-          this.$bvToast.show('form-error')
-        })
+
+      if (this.formForAdd) {
+        this.$axios
+          .post('/', this.form)
+          .then(() => {
+            this.$bvToast.show('form-add')
+            this.onReset(e)
+          })
+          .catch((e) => {
+            console.log(e)
+            this.$bvToast.show('form-error')
+          })
+      } else {
+        this.$axios
+          .put(this.contactId, this.form)
+          .then((response) => {
+            this.$bvToast.show('form-update')
+            console.log(response)
+          })
+          .catch((e) => {
+            console.log(e)
+            this.$bvToast.show('form-error')
+          })
+      }
     },
     onReset(e) {
       e.preventDefault()
@@ -136,6 +156,27 @@ export default {
       this.$nextTick(() => {
         this.show = true
       })
+    },
+    getContact(id) {
+      this.$axios
+        .get(id)
+        .then((response) => {
+          this.contactId = response.data._id
+          this.form.name = response.data.name
+          this.form.phone_number = response.data.phone_number
+          this.form.email = response.data.email
+          this.form.nickname = response.data.nickname
+          this.form.notes = response.data.notes
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+  },
+  created() {
+    if (this.$route.params.id) {
+      this.getContact(this.$route.params.id)
+      this.formForAdd = false
     }
   }
 }

@@ -17,6 +17,11 @@ export default new Router({
       path: '/form',
       name: 'contact form',
       component: ContactForm
+    },
+    {
+      path: '/form/:id',
+      name: 'contact update',
+      component: ContactForm
     }
     // {
     //   path: "/about",
