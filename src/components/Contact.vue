@@ -1,6 +1,6 @@
 <template>
   <b-card class="overflow-hidden contact-item">
-    <b-row no-gutters>
+    <b-row>
       <b-col xs="6" md="4">
         <b-card-img
           :src="require('../assets/placeholder.png')"
