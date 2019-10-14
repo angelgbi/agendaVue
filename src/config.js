@@ -40,7 +40,10 @@ const axiosInstance = axios.create()
 
 axiosInstance.defaults.baseURL = process.env.VUE_APP_API_LOCATION
 axiosInstance.defaults.headers.common.Accept = 'application/json'
-axiosInstance.defaults.timeout = 1500
+axiosInstance.defaults.timeout = 5000
+axiosInstance.defaults.headers.common.Authorization = `Basic ${window.btoa(
+  process.env.VUE_APP_USER
+)}`
 
 Vue.prototype.$axios = axiosInstance
 
